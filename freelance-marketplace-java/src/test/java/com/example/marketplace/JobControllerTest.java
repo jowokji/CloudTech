@@ -1,12 +1,26 @@
-package com.example.marketplace;
+package com.example.freelance.controller;
 
-import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
+import com.example.freelance.service.JobService;
+import org.springframework.web.bind.annotation.*;
 
-public class JobControllerTest {
+@RestController
+@RequestMapping("/jobs")
+public class JobController {
 
-    @Test
-    void dummyTest() {
-        assertThat(2 + 2).isEqualTo(4);
+    private final JobService jobService;
+
+    public JobController(JobService jobService) {
+        this.jobService = jobService;
+    }
+
+    @PostMapping("/create")
+    public String createJob(@RequestParam String title) {
+        jobService.createJob(title);
+        return "Job created: " + title;
+    }
+
+    @GetMapping("/ping")
+    public String ping() {
+        return "pong";
     }
 }
